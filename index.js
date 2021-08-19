@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 
 
 app.get('/', (req, res) => {
-  res.send("Cardapio Chatbot teste com Heroku e Node.js visualizando o Github usando git commit");
+  res.send("Cardapio Chatbot teste Node.js visualizando o Github usando git commit");
 })
 
 app.post('/webhook', async (req, res) => {
