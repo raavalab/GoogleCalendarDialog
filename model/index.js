@@ -34,7 +34,7 @@ exports.verCardapio = async ( msg, params ) => {
 		.catch( err => console.log(err) );
 }
 
-// 
+//  outras funções
 
 exports.verStatus = () => {
 
@@ -42,7 +42,7 @@ exports.verStatus = () => {
 	
 	let resposta = {
 		tipo: 'texto',
-		mensagem: 'Calma que já estamos preparando o seu pedido neste momento',
+		mensagem: 'Já estamos preparando o seu pedido neste momento. Vamos manter informado',
 		cardapio
 	}
      

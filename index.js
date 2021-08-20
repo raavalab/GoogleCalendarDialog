@@ -31,15 +31,13 @@ app.post('/webhook', async (req, res) => {
       resposta = Model.verStatus( mensagem, parametros );
       break;
     default: 
-      resposta = {tipo: 'texto', mensagem: 'Sinto muito, não entendi o que você consultar!'}
+      resposta = {tipo: 'texto', mensagem: 'Sinto muito, não entendi o que você gostaria de consultar!'}
   }
 
-  
   let meuCardapio = [];
   let menuItem = {};
 
   console.log('retorno da resposta: ', resposta);
-
     
   for (let i=0; i < resposta.cardapio.length; i++) {
     menuItem = {

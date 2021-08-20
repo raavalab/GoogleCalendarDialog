@@ -12,7 +12,7 @@
     "chatbot",
     "dialogflow"
   ],
-  "author": "Reginaldo Santos (reginaldosantos.br@gmail.com)",
+  "author": "Feng Jung (b2contabil@gmail.com)",
   "license": "ISC",
   "dependencies": {
     "actions-on-google": "^2.12.0",
