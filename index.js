@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 
 
 app.get('/', (req, res) => {
-  res.send("Cardapio Chatbot teste Node.js visualizando o Github usando git commit");
+  res.send("Cardapio Chatbot - ngrok");
 })
 
 app.post('/webhook', async (req, res) => {
@@ -18,39 +18,44 @@ app.post('/webhook', async (req, res) => {
   const mensagem = req.body.queryResult.queryText;
   const intencao = req.body.queryResult.intent.displayName;
   const parametros = req.body.queryResult.parameters;
+  
   let responder = ""
 
   switch(intencao) {
-    case 'VerCardapio': 
+    case 'verCardapio': 
+      console.log(intencao)
       resposta = await Model.verCardapio( mensagem, parametros );
       break;
     case 'verStatus':
+      console.log(intencao)
       resposta = Model.verStatus( mensagem, parametros );
       break;
     default: 
-      resposta = {tipo: 'texto', mensagem: 'Sinto muito, não entendi o que você quer'}
+      resposta = {tipo: 'texto', mensagem: 'Sinto muito, não entendi o que você consultar!'}
   }
 
-
+  
   let meuCardapio = [];
   let menuItem = {};
 
-  for (let i=0; i<resposta.cardapio.length; i++) {
+  console.log('retorno da resposta: ', resposta);
+
+    
+  for (let i=0; i < resposta.cardapio.length; i++) {
     menuItem = {
         "card": {
           "title": resposta.cardapio[i].titulo,
           "subtitle": resposta.cardapio[i].preco,
           "imageUri": resposta.cardapio[i].url,
-        }
+      }
     }
     meuCardapio.push(menuItem)
   }
 
-
-if ( resposta.tipo == 'texto') {
-  responder = {
-    "fulfillmentText": "Resposta do Webhook",
-    "fulfillmentMessages": [
+  if ( resposta.tipo == 'texto') {
+    responder = {
+     "fulfillmentText": "Resposta do Webhook",
+     "fulfillmentMessages": [
       {
         "text": {
           "text": [
@@ -61,7 +66,7 @@ if ( resposta.tipo == 'texto') {
     ],
     "source": "",
   }
-} else if ( resposta.tipo == 'imagem' ) {
+ } else if ( resposta.tipo == 'imagem' ) {
   responder = {
     "fulfillmentText": "Resposta do Webhook",
     "fulfillmentMessages": [
@@ -73,15 +78,15 @@ if ( resposta.tipo == 'texto') {
     ],
     "source": "",
   }
-} else if ( resposta.tipo == 'card' ) {
+ } else if ( resposta.tipo == 'card' ) {
   responder = {
     "fulfillmentText": "Resposta do Webhook",
     "fulfillmentMessages":  meuCardapio,
-    "source": "",
+    "source": "GoogleSheet",
   }
-}
+ }
 
-console.log("resposta final", responder)
+  console.log("resposta final", responder)
 
   res.send(responder);
 })
